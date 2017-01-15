@@ -10,7 +10,7 @@ class NatsAdapter {
 		this.nats = nats.connect(opts);
 		this.id = `${uuid.v1()}-{process.pid}`;
 	}
-	addTask(taskname, params) {
+	do(taskname, params) {
 		let data_string = JSON.stringify(params);
 
 		return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ class NatsAdapter {
 			}, resolve);
 		}).then(JSON.parse);
 	}
-	listenTask(taskname, callback) {
+	act(taskname, callback) {
 		this.nats.subscribe(taskname, (request, replyTo) => {
 			let request_data = JSON.parse(request);
 
